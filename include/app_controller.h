@@ -49,7 +49,8 @@ class AppController : public QMainWindow
         //commands
         void on_pushButton_led_low_clicked();
         void on_pushButton_led_high_clicked();
-        void on_pushButton_send_text_clicked();
+        void on_pushButton_send_custom_text_clicked();
         void on_pushButton_send_pwm_clicked();
+        void on_pushButton_clear_custom_text_clicked();
 };
 

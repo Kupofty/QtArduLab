@@ -103,12 +103,17 @@ void AppController::on_pushButton_clear_output_text_clicked()
     ui->plainTextEdit_outputs->clear();
 }
 
-void AppController::on_pushButton_send_text_clicked()
+void AppController::on_pushButton_send_custom_text_clicked()
 {
-    QString message = "Hello World!";
-    sendMessage(message);
+    QString message = ui->lineEdit_custom_text->text();
+    if(!message.isEmpty())
+        sendMessage(message);
 }
 
+void AppController::on_pushButton_clear_custom_text_clicked()
+{
+    ui->lineEdit_custom_text->clear();
+}
 
 void AppController::on_pushButton_led_low_clicked()
 {
@@ -122,12 +127,12 @@ void AppController::on_pushButton_led_high_clicked()
     sendMessage(message);
 }
 
-
 void AppController::on_pushButton_send_pwm_clicked()
 {
     QString message = QString::number(ui->dial_pwm->value());
     sendMessage(message);
 }
+
 
 
 ////////////////////
@@ -169,6 +174,7 @@ void AppController::sendMessage(const QString &message)
     // Append timestamped message to output
     ui->plainTextEdit_outputs->appendPlainText(prependTimestamp(message));
 }
+
 
 
 

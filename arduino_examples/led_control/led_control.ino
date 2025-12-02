@@ -11,7 +11,8 @@ void loop()
   if (Serial.available() > 0) {
     String message = Serial.readStringUntil('\n'); // Read incoming line
     message.trim();                                // Remove \r, spaces, etc.
-    Serial.println("Received: " + message);
+    
+    String commandState = "valid";
 
     if (message == "HIGH") {
       digitalWrite(LED_BUILTIN, HIGH);
@@ -19,5 +20,9 @@ void loop()
     else if (message == "LOW") {
       digitalWrite(LED_BUILTIN, LOW);
     }
+    else
+      commandState = "unvalid";
+
+    Serial.println("Received: " + message + " [" + commandState + " command]");
   }
 }
