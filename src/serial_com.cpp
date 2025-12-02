@@ -15,6 +15,7 @@ SerialCom::SerialCom()
 
     //Connect
     connect(&serial, &QSerialPort::readyRead, this, &SerialCom::readData);
+    connect(&serial, &QSerialPort::errorOccurred, this, &SerialCom::handleSerialError);
 }
 
 SerialCom::~SerialCom()
@@ -45,12 +46,10 @@ void SerialCom::sendData(const QByteArray &data)
 bool SerialCom::openSerialDevice()
 {
     if (serial.isOpen()){
-        qWarning() << "A serial port is already opened" ;
         return false;
     }
 
     if (!serial.open(QIODevice::ReadWrite)) {
-        qWarning() << "Failed to open serial port:" << serial.errorString();
         return false;
     }
 
@@ -80,6 +79,14 @@ void SerialCom::readData()
         buffer.remove(0, index + 1);
 
         emit newLineReceived(line);
+    }
+}
+
+void SerialCom::handleSerialError(QSerialPort::SerialPortError error)
+{
+    if (error == QSerialPort::ResourceError || error == QSerialPort::DeviceNotFoundError) {
+        emit deviceDisconnected(serial.errorString());
+        closeSerialDevice();
     }
 }
 

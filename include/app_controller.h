@@ -4,9 +4,9 @@
 #include <QComboBox>
 #include <QDateTime>
 #include <QRegularExpression>
+#include <QMessageBox>
 
 #include "serial_com.h"
-
 
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +39,7 @@ class AppController : public QMainWindow
 
     private slots:
         void handleSerialInput(const QByteArray &line);
+        void handleSerialDisconnection(const QString errorMessage);
 
         //connection page
         void on_pushButton_refresh_available_ports_list_clicked();

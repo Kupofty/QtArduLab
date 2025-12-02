@@ -33,9 +33,11 @@ class SerialCom : public QObject
 
     signals:
         void newLineReceived(const QByteArray &line);
+        void deviceDisconnected(const QString errorMessage);
 
     private slots:
         void readData();
+        void handleSerialError(QSerialPort::SerialPortError error);
 
     private:
         QSerialPort serial;
