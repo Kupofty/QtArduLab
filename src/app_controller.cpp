@@ -107,7 +107,12 @@ void AppController::on_pushButton_send_custom_text_clicked()
 {
     QString message = ui->lineEdit_custom_text->text();
     if(!message.isEmpty())
-        sendMessage(message);
+        sendSerial(message);
+}
+
+void AppController::on_lineEdit_custom_text_returnPressed()
+{
+    ui->pushButton_send_custom_text->click();
 }
 
 void AppController::on_pushButton_clear_custom_text_clicked()
@@ -117,20 +122,14 @@ void AppController::on_pushButton_clear_custom_text_clicked()
 
 void AppController::on_pushButton_led_low_clicked()
 {
-    QString message = "LOW";
-    sendMessage(message);
+    int pin = ui->spinBox_led_pin->value();
+    sendMessage("LED", pin, "LOW");
 }
 
 void AppController::on_pushButton_led_high_clicked()
 {
-    QString message = "HIGH";
-    sendMessage(message);
-}
-
-void AppController::on_pushButton_send_pwm_clicked()
-{
-    QString message = QString::number(ui->dial_pwm->value());
-    sendMessage(message);
+    int pin = ui->spinBox_led_pin->value();
+    sendMessage("LED", pin, "HIGH");
 }
 
 
@@ -153,6 +152,11 @@ void AppController::on_pushButton_clear_input_text_clicked()
     ui->plainTextEdit_inputs->clear();
 }
 
+void AppController::on_pushButton_freeze_input_text_clicked()
+{
+    //Automatic scroll to the bottom
+    ui->plainTextEdit_inputs->moveCursor(QTextCursor::End);
+}
 
 
 /////////////////////////
@@ -163,7 +167,7 @@ QString AppController::prependTimestamp(const QString &msg)
     return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] " + msg;
 }
 
-void AppController::sendMessage(const QString &message)
+void AppController::sendSerial(const QString &message)
 {
     if (!serial_device->isSerialOpen())
         return;
@@ -173,6 +177,15 @@ void AppController::sendMessage(const QString &message)
 
     // Append timestamped message to output
     ui->plainTextEdit_outputs->appendPlainText(prependTimestamp(message));
+}
+
+void AppController::sendMessage(QString command, int pin, QString value)
+{
+    QString space = " ";
+    QString pinStr = QString::number(pin);
+
+    QString message = command + space + pinStr + space + value;
+    sendSerial(message);
 }
 
 

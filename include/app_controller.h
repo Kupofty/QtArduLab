@@ -34,7 +34,8 @@ class AppController : public QMainWindow
         void listAvailablePorts(QComboBox *comboBox);
         void updateGuiAfterSerialConnection(bool connectState);
         QString prependTimestamp(const QString &msg);
-        void sendMessage(const QString &message);
+        void sendSerial(const QString &message);
+        void sendMessage(QString type, int pin, QString messageCommand);
 
     private slots:
         void handleSerialInput(const QByteArray &line);
@@ -50,7 +51,8 @@ class AppController : public QMainWindow
         void on_pushButton_led_low_clicked();
         void on_pushButton_led_high_clicked();
         void on_pushButton_send_custom_text_clicked();
-        void on_pushButton_send_pwm_clicked();
         void on_pushButton_clear_custom_text_clicked();
+        void on_lineEdit_custom_text_returnPressed();
+        void on_pushButton_freeze_input_text_clicked();
 };
 

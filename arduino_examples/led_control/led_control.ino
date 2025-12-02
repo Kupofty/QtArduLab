@@ -1,28 +1,59 @@
-// Turn ON/OFF the built-in LED when receiving specific serial command from Qt GUI
-
-void setup() {
-  Serial.begin(9600);           // Initialize Serial
-  pinMode(LED_BUILTIN, OUTPUT); // Initialize LED pin
+void setup() 
+{ 
+  Serial.begin(9600); 
+  pinMode(LED_BUILTIN, OUTPUT); 
 }
 
 void loop() 
 {
-  // Check if data is available on Serial
-  if (Serial.available() > 0) {
-    String message = Serial.readStringUntil('\n'); // Read incoming line
-    message.trim();                                // Remove \r, spaces, etc.
-    
-    String commandState = "valid";
+  if (Serial.available() > 0) 
+  {
+    String message = Serial.readStringUntil('\n');
+    message.trim();
 
-    if (message == "HIGH") {
-      digitalWrite(LED_BUILTIN, HIGH);
-    } 
-    else if (message == "LOW") {
-      digitalWrite(LED_BUILTIN, LOW);
+    // Parse message
+    int firstSpace  = message.indexOf(' ');
+    int secondSpace = message.indexOf(' ', firstSpace + 1);
+    if (firstSpace < 0 || secondSpace < 0) 
+    {
+      Serial.println("invalid message format");
+      return;
+    }
+    
+    // Split into 3 tokens
+    String command  = message.substring(0, firstSpace);
+    String pinStr = message.substring(firstSpace + 1, secondSpace);
+    String value = message.substring(secondSpace + 1);
+
+    //Check pin validity
+    int pin = pinStr.toInt();
+    if(pinStr.toInt() < 0)
+    {
+      Serial.println("invalid pin");
+      return;
+    }
+      
+    // LED CONTROL
+    if (command == "LED")
+    {
+      if (value == "HIGH")
+      {
+        digitalWrite(pin, HIGH);
+        Serial.println("LED " + pinStr + " -> HIGH");
+      }
+      else if (value == "LOW")
+      {
+        digitalWrite(pin, LOW);
+        Serial.println("LED " + pinStr + " -> LOW");
+      }
+      else
+      {
+        Serial.println("invalid LED value");
+      }
     }
     else
-      commandState = "unvalid";
-
-    Serial.println("Received: " + message + " [" + commandState + " command]");
+    {
+      Serial.println("invalid command");
+    }
   }
 }
