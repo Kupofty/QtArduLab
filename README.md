@@ -7,6 +7,12 @@ QtArduLab is a lightweight Qt-based application designed for **sending commands 
 Its main goal is to provide a clean and efficient GUI for **debugging, testing, and developing embedded systems**.
 
 ---
+## Requirements
+- Qt 6 (Widgets, SerialPort)
+- C++17 or higher
+- Arduino or compatible serial device
+
+---
 ### Command Format
 Commands sent to the Arduino from the GUI follow a custom format.  
 The Arduino must use and decode this specific format to execute the correct actions.  
@@ -14,12 +20,6 @@ The Arduino must use and decode this specific format to execute the correct acti
 For a full list of commands and details, refer to the `ArduinoCommandsList.md` manual in the `docs` folder.
 Examples are provided in the `arduino_examples` folder
 
----
-## Requirements
-- Qt6 (Widgets, SerialPort)
-- C++17 or higher
-- Arduino or compatible serial device
-  
 ---
 ## Copyright and licensing
 This software is Copyright (c) Kupofty 2025.  

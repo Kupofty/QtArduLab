@@ -119,6 +119,8 @@ void AppController::on_pushButton_send_custom_text_clicked()
     QString message = ui->lineEdit_custom_text->text();
     if(!message.isEmpty())
         sendSerial(message);
+
+    ui->plainTextEdit_commands->moveCursor(QTextCursor::End);
 }
 
 void AppController::on_lineEdit_custom_text_returnPressed()
@@ -178,7 +180,20 @@ void AppController::handleSerialInput(const QByteArray &line)
         return;
 
     QString text = QString::fromUtf8(line).trimmed();
-    ui->plainTextEdit_commands->appendPlainText("Response : " + text);
+
+    // Reponse to CMD
+    if (text.startsWith("[CMD]")) {
+        int endBracket = text.indexOf(']');
+        QString payload = text.mid(endBracket + 1).trimmed();
+        ui->plainTextEdit_commands->appendPlainText("Response : " + payload);
+    }
+    //Display sensors & logs
+    else
+    {
+        QString timeStampedText = actualTimeStamp() + text;
+        ui->plainTextEdit_inputs->appendPlainText(timeStampedText);
+    }
+
 }
 
 void AppController::handleSerialError(const QString errorMessage)
@@ -197,7 +212,6 @@ void AppController::on_pushButton_clear_input_text_clicked()
 
 void AppController::on_pushButton_freeze_input_text_clicked()
 {
-    //Automatic scroll to the bottom
     ui->plainTextEdit_inputs->moveCursor(QTextCursor::End);
 }
 
@@ -208,7 +222,7 @@ void AppController::on_pushButton_freeze_input_text_clicked()
 /////////////////////////
 QString AppController::actualTimeStamp()
 {
-    return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "]";
+    return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] ";
 }
 
 
