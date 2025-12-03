@@ -17,6 +17,11 @@ class SerialCom : public QObject
         //Set
         void setPortName(const QString &portName);
         void setBaudRate(qint32 baudRate);
+        void setDataBits(QSerialPort::DataBits dataBits);
+        void setParity(QSerialPort::Parity parity);
+        void setStopBits(QSerialPort::StopBits stopBits);
+        void setFlowControl(QSerialPort::FlowControl flowControl);
+        void setOpenMode(QIODevice::OpenMode mode);
 
         //Com
         bool openSerialDevice();
@@ -27,13 +32,19 @@ class SerialCom : public QObject
         void sendData(const QByteArray &data);
 
         //Get
-        QString getPortName();
         QString getErrorString();
         bool isSerialOpen();
+        QString getPortName();
+        qint32 getBaudRate();
+        QSerialPort::DataBits getDataBits();
+        QSerialPort::Parity getParity();
+        QSerialPort::StopBits getStopBits();
+        QSerialPort::FlowControl getFlowControl();
+        QIODevice::OpenMode getOpenMode();
 
     signals:
         void newLineReceived(const QByteArray &line);
-        void deviceDisconnected(const QString errorMessage);
+        void serialError(const QString errorMessage);
 
     private slots:
         void readData();
@@ -42,5 +53,6 @@ class SerialCom : public QObject
     private:
         QSerialPort serial;
         QByteArray buffer;
+        QIODevice::OpenMode ioMode = QIODevice::ReadWrite;
 
 };

@@ -5,7 +5,7 @@
 /////////////
 SerialCom::SerialCom()
 {
-    //Set serial parameters
+    //Init serial parameters
     serial.setPortName("COM0");
     serial.setBaudRate(QSerialPort::Baud115200);
     serial.setDataBits(QSerialPort::Data8);
@@ -40,6 +40,8 @@ void SerialCom::sendData(const QByteArray &data)
     serial.write(sendData);
 }
 
+
+
 //////////////////
 /// Connection ///
 //////////////////
@@ -49,7 +51,7 @@ bool SerialCom::openSerialDevice()
         return false;
     }
 
-    if (!serial.open(QIODevice::ReadWrite)) {
+    if (!serial.open(ioMode)) {
         return false;
     }
 
@@ -85,7 +87,7 @@ void SerialCom::readData()
 void SerialCom::handleSerialError(QSerialPort::SerialPortError error)
 {
     if (error == QSerialPort::ResourceError || error == QSerialPort::DeviceNotFoundError) {
-        emit deviceDisconnected(serial.errorString());
+        emit serialError(serial.errorString());
         closeSerialDevice();
     }
 }
@@ -105,16 +107,36 @@ void SerialCom::setBaudRate(qint32 baudRate)
     serial.setBaudRate(baudRate);
 }
 
+void SerialCom::setDataBits(QSerialPort::DataBits dataBits)
+{
+    serial.setDataBits(dataBits);
+}
+
+void SerialCom::setParity(QSerialPort::Parity parity)
+{
+    serial.setParity(parity);
+}
+
+void SerialCom::setStopBits(QSerialPort::StopBits stopBits)
+{
+    serial.setStopBits(stopBits);
+}
+
+void SerialCom::setFlowControl(QSerialPort::FlowControl flowControl)
+{
+    serial.setFlowControl(flowControl);
+}
+
+void SerialCom::setOpenMode(QIODevice::OpenMode mode)
+{
+    ioMode = mode;
+}
+
 
 
 ////////////////
 /// Get data ///
 ////////////////
-QString SerialCom::getPortName()
-{
-    return serial.portName();
-}
-
 QString SerialCom::getErrorString()
 {
     return serial.errorString();
@@ -125,3 +147,37 @@ bool SerialCom::isSerialOpen()
     return serial.isOpen();
 }
 
+QString SerialCom::getPortName()
+{
+    return serial.portName();
+}
+
+qint32 SerialCom::getBaudRate()
+{
+    return serial.baudRate();
+}
+
+QSerialPort::DataBits SerialCom::getDataBits()
+{
+    return serial.dataBits();
+}
+
+QSerialPort::Parity SerialCom::getParity()
+{
+    return serial.parity();
+}
+
+QSerialPort::StopBits SerialCom::getStopBits()
+{
+    return serial.stopBits();
+}
+
+QSerialPort::FlowControl SerialCom::getFlowControl()
+{
+    return serial.flowControl();
+}
+
+QIODevice::OpenMode SerialCom::getOpenMode()
+{
+    return ioMode;
+}

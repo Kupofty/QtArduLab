@@ -13,7 +13,7 @@ AppController::AppController(QWidget *parent) :
 
     //Setup Connects
     connect(serial_device, &SerialCom::newLineReceived, this, &AppController::handleSerialInput);
-    connect(serial_device, &SerialCom::deviceDisconnected, this, &AppController::handleSerialDisconnection);
+    connect(serial_device, &SerialCom::serialError, this, &AppController::handleSerialError);
 
     //Init UI
     listAvailablePorts(ui->comboBox_serial_input_port_list);
@@ -38,18 +38,28 @@ void AppController::on_pushButton_connect_serial_input_clicked()
     serial_device->setPortName(ui->comboBox_serial_input_port_list->currentText());
     serial_device->setBaudRate((ui->comboBox_serial_input_port_baudrate->currentText()).toInt());
 
+    int index = ui->comboBox_io_method->currentIndex();
+    if (index == 0)
+        serial_device->setOpenMode(QIODevice::ReadWrite);
+    else if (index == 1)
+        serial_device->setOpenMode(QIODevice::ReadOnly);
+    else if (index == 2)
+        serial_device->setOpenMode(QIODevice::WriteOnly);
+
     //Try to connect
     QString result;
     if(serial_device->openSerialDevice())
     {
         result =  "Connected to " + serial_device->getPortName();
         updateGuiAfterSerialConnection(true);
+        ui->verticalFrame_commands->setEnabled(index != 1);
     }
     else
         result =  "Failed to open " + serial_device->getPortName() + " : " + serial_device->getErrorString();
 
-//Display connection status
+    //Display connection status
     ui->plainTextEdit_connection_status->setPlainText(result);
+
 }
 
 void AppController::on_pushButton_disconnect_serial_input_clicked()
@@ -148,15 +158,13 @@ void AppController::handleSerialInput(const QByteArray &line)
     ui->plainTextEdit_inputs->appendPlainText(prependTimestamp(text));
 }
 
-void AppController::handleSerialDisconnection(const QString errorMessage)
+void AppController::handleSerialError(const QString errorMessage)
 {
     ui->tabWidget->setCurrentWidget(ui->tab_connection);
     ui->pushButton_disconnect_serial_input->click();
     ui->pushButton_refresh_available_ports_list->click();
 
-    QMessageBox::warning(this,
-                         "Serial Disconnected",
-                         "The serial device was disconnected:\n" + errorMessage);
+    QMessageBox::warning(this, "Serial Error", errorMessage);
 }
 
 void AppController::on_pushButton_clear_input_text_clicked()
@@ -169,6 +177,7 @@ void AppController::on_pushButton_freeze_input_text_clicked()
     //Automatic scroll to the bottom
     ui->plainTextEdit_inputs->moveCursor(QTextCursor::End);
 }
+
 
 
 /////////////////////////

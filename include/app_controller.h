@@ -39,21 +39,18 @@ class AppController : public QMainWindow
 
     private slots:
         void handleSerialInput(const QByteArray &line);
-        void handleSerialDisconnection(const QString errorMessage);
+        void handleSerialError(const QString errorMessage);
 
-        //connection page
         void on_pushButton_refresh_available_ports_list_clicked();
         void on_pushButton_connect_serial_input_clicked();
         void on_pushButton_disconnect_serial_input_clicked();
-        // logs
         void on_pushButton_clear_input_text_clicked();
         void on_pushButton_clear_output_text_clicked();
-        //commands
+        void on_pushButton_freeze_input_text_clicked();
         void on_pushButton_led_low_clicked();
         void on_pushButton_led_high_clicked();
         void on_pushButton_send_custom_text_clicked();
         void on_pushButton_clear_custom_text_clicked();
         void on_lineEdit_custom_text_returnPressed();
-        void on_pushButton_freeze_input_text_clicked();
 };
 
