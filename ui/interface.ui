@@ -447,7 +447,7 @@
       </widget>
       <widget class="QWidget" name="tab_io">
        <attribute name="title">
-        <string>Input/Output</string>
+        <string>Inputs/Outputs</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="1" column="0" rowspan="2">
@@ -486,7 +486,7 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string>Custom Command</string>
+              <string>Custom</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -643,7 +643,7 @@
          </layout>
         </item>
         <item row="1" column="1">
-         <widget class="QPlainTextEdit" name="plainTextEdit_outputs">
+         <widget class="QPlainTextEdit" name="plainTextEdit_commands">
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -656,23 +656,6 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <pointsize>15</pointsize>
-            <bold>true</bold>
-            <underline>false</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>Outputs</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_2">
           <property name="font">
@@ -682,8 +665,11 @@
             <underline>false</underline>
            </font>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::Box</enum>
+          </property>
           <property name="text">
-           <string>Inputs</string>
+           <string>Sensors &amp; Logs</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -781,13 +767,19 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
+        <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label_3">
           <property name="font">
            <font>
             <pointsize>15</pointsize>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Plain</enum>
           </property>
           <property name="text">
            <string>Commands</string>

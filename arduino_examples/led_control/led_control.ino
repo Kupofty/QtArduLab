@@ -16,7 +16,7 @@ void loop()
     int secondSpace = message.indexOf(' ', firstSpace + 1);
     if (firstSpace < 0 || secondSpace < 0) 
     {
-      Serial.println("invalid message format");
+      Serial.println("invalid format");
       return;
     }
     
@@ -26,29 +26,39 @@ void loop()
     String value = message.substring(secondSpace + 1);
 
     //Check pin validity
-    int pin = pinStr.toInt();
-    if(pinStr.toInt() < 0)
-    {
-      Serial.println("invalid pin");
-      return;
+    bool valid = true;
+    
+    // Check if the string contains only digits
+    for (int i = 0; i < pinStr.length(); i++) {
+        if (!isDigit(pinStr[i])) {
+            valid = false;
+            break;
+        }
     }
-      
+   
+    if (!valid) {
+        Serial.println("invalid pin");
+        return;
+    }
+    
+    int pin = pinStr.toInt(); // safe now
+    
     // LED CONTROL
     if (command == "LED")
     {
       if (value == "HIGH")
       {
         digitalWrite(pin, HIGH);
-        Serial.println("LED " + pinStr + " -> HIGH");
+        Serial.println("Switching LED on pin " + pinStr + " to HIGH");
       }
       else if (value == "LOW")
       {
         digitalWrite(pin, LOW);
-        Serial.println("LED " + pinStr + " -> LOW");
+        Serial.println("[CMD] Switching LED on pin " + pinStr + " to LOW");
       }
       else
       {
-        Serial.println("invalid LED value");
+        Serial.println("invalid value");
       }
     }
     else

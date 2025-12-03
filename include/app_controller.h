@@ -33,7 +33,7 @@ class AppController : public QMainWindow
         void closeInputSerial();
         void listAvailablePorts(QComboBox *comboBox);
         void updateGuiAfterSerialConnection(bool connectState);
-        QString prependTimestamp(const QString &msg);
+        QString actualTimeStamp();
         void sendSerial(const QString &message);
         void sendMessage(QString type, int pin, QString messageCommand);
 

@@ -111,7 +111,7 @@ void AppController::on_pushButton_refresh_available_ports_list_clicked()
 /////////////////
 void AppController::on_pushButton_clear_output_text_clicked()
 {
-    ui->plainTextEdit_outputs->clear();
+    ui->plainTextEdit_commands->clear();
 }
 
 void AppController::on_pushButton_send_custom_text_clicked()
@@ -143,6 +143,29 @@ void AppController::on_pushButton_led_high_clicked()
     sendMessage("LED", pin, "HIGH");
 }
 
+void AppController::sendSerial(const QString &message)
+{
+    if (!serial_device->isSerialOpen())
+        return;
+
+    // Send message to serial device
+    serial_device->sendData(message);
+
+    // Append timestamped message to output
+    ui->plainTextEdit_commands->appendPlainText("--------------------------------");
+    ui->plainTextEdit_commands->appendPlainText(actualTimeStamp());
+    ui->plainTextEdit_commands->appendPlainText("Command : " + message);
+}
+
+void AppController::sendMessage(QString command, int pin, QString value)
+{
+    QString space = " ";
+    QString pinStr = QString::number(pin);
+
+    QString message = command + space + pinStr + space + value;
+    sendSerial(message);
+}
+
 
 
 ////////////////////
@@ -155,7 +178,7 @@ void AppController::handleSerialInput(const QByteArray &line)
         return;
 
     QString text = QString::fromUtf8(line).trimmed();
-    ui->plainTextEdit_inputs->appendPlainText(prependTimestamp(text));
+    ui->plainTextEdit_commands->appendPlainText("Response : " + text);
 }
 
 void AppController::handleSerialError(const QString errorMessage)
@@ -183,33 +206,10 @@ void AppController::on_pushButton_freeze_input_text_clicked()
 /////////////////////////
 /// General Functions ///
 /////////////////////////
-QString AppController::prependTimestamp(const QString &msg)
+QString AppController::actualTimeStamp()
 {
-    return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] " + msg;
+    return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "]";
 }
-
-void AppController::sendSerial(const QString &message)
-{
-    if (!serial_device->isSerialOpen())
-        return;
-
-    // Send message to serial device
-    serial_device->sendData(message);
-
-    // Append timestamped message to output
-    ui->plainTextEdit_outputs->appendPlainText(prependTimestamp(message));
-}
-
-void AppController::sendMessage(QString command, int pin, QString value)
-{
-    QString space = " ";
-    QString pinStr = QString::number(pin);
-
-    QString message = command + space + pinStr + space + value;
-    sendSerial(message);
-}
-
-
 
 
 
