@@ -37,14 +37,15 @@ void loop()
         return;
       }
   }
-
+  
   int pin = pinStr.toInt(); 
-  myservo.attach(pin);
-  int value = valueStr.toInt();
 
   // SERVOMOTOR CONTROL
   if (command == "SERVO")
   {
+    myservo.attach(pin);
+    int value = valueStr.toInt();
+
     if (value>=0 && value <=180)
     {
       myservo.write(value);
