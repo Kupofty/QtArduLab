@@ -1,14 +1,11 @@
 #include <Servo.h>
 
-#define SERVO_PIN 9
-
 Servo myservo; 
 int pos = 0;
 
 void setup() 
 { 
   Serial.begin(9600); 
-  myservo.attach(SERVO_PIN);
 }
 
 void loop() 
@@ -42,14 +39,9 @@ void loop()
   }
 
   int pin = pinStr.toInt(); 
-
+  myservo.attach(pin);
   int value = valueStr.toInt();
-  if(value > 180)
-    value = 180;
-  if(value < 0)
-    value = 0;
-  
-  
+
   // SERVOMOTOR CONTROL
   if (command == "SERVO")
   {
