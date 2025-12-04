@@ -58,5 +58,7 @@ class AppController : public QMainWindow
         void on_pushButton_servomotor_0_clicked();
         void on_pushButton_servomotor_90_clicked();
         void on_pushButton_servomotor_180_clicked();
+        void on_pushButton_speaker_on_clicked();
+        void on_pushButton_speaker_off_clicked();
 };
 

@@ -7,20 +7,20 @@ All communication uses ASCII strings terminated with a newline (`\n`).
 ## 1. Commands (Qt → Arduino)
 
 ### 1.1 Format
-Commands sent from Qt to the Arduino follow this structure: `<COMMAND> <ID> <VALUE>`
+Commands sent from Qt to the Arduino follow this structure: 
 
-| Field      | Description     |
-|------------|-----------------|
-| COMMAND    | Category        |
-| ID         | Pin number      |
-| VALUE      | Action or state |
+| Field 1  | Field 2 | Field 3 | 
+|----------|---------|---------|
+| COMMAND  | ID      | VALUE   |
+
 
 ### 1.2 Available Commands
 
-| COMMAND  | Description                     | Format                  | ID                  | Value           | Example          |
-|----------|---------------------------------|-------------------------|---------------------|-----------------|------------------|
-| `DIGITAL`| Control a digital output        | `DIGITAL <PIN> <STATE>` | Any digital pin     | `HIGH`, `LOW`   | `DIGITAL 13 HIGH`|
-| `SERVO`  | Control a servo motor angle     | `SERVO <PIN> <ANGLE>`   | PWM-capable pin     |  `0-180`        | `SERVO 9 120`    |
+| COMMAND  | Description                        | Format                   | ID                | Value                    | Example           |
+|----------|------------------------------------|--------------------------|-------------------|--------------------------|-------------------|
+| `DIGITAL`| Control a digital output           | `DIGITAL <PIN> <STATE>`  | Any digital pin   | `HIGH`, `LOW`            | `DIGITAL 13 HIGH` |
+| `SERVO`  | Control a servo motor angle        | `SERVO <PIN> <ANGLE>`    | PWM-capable pin   | `0-180`                  | `SERVO 9 120`     |
+| `TONE`   | Control a speaker / passive buzzer | `TONE <PIN> <FREQUENCY>` | Any digital pin   | `0-∞ = TONE`,`-1 = STOP` | `TONE 9 1000`     |
 
 > **Note:** The physical wiring and the device must match the pin numbers and type specified in the command.
 > **Note:** New commands will be added in the future

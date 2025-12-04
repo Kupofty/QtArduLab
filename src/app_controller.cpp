@@ -212,7 +212,6 @@ void AppController::on_pushButton_servomotor_0_clicked()
     ui->spinBox_servomotor_angle->setValue(angle);
 }
 
-
 void AppController::on_pushButton_servomotor_90_clicked()
 {
     int pin = ui->spinBox_servomotor_pin->value();
@@ -223,7 +222,6 @@ void AppController::on_pushButton_servomotor_90_clicked()
     ui->horizontalSlider_servomotor_angle->setValue(angle);
     ui->spinBox_servomotor_angle->setValue(angle);
 }
-
 
 void AppController::on_pushButton_servomotor_180_clicked()
 {
@@ -236,6 +234,22 @@ void AppController::on_pushButton_servomotor_180_clicked()
     ui->spinBox_servomotor_angle->setValue(angle);
 }
 
+
+//Passive buzzer
+void AppController::on_pushButton_speaker_on_clicked()
+{
+    int pin = ui->spinBox_speaker_pin->value();
+    int frequency = ui->spinBox_speaker_frequency->value();
+    QString frequencyStr = QString::number(frequency);
+    sendMessage("TONE", pin, frequencyStr);
+}
+
+
+void AppController::on_pushButton_speaker_off_clicked()
+{
+    int pin = ui->spinBox_speaker_pin->value();
+    sendMessage("TONE", pin, "-1");
+}
 
 
 
@@ -293,6 +307,8 @@ QString AppController::actualTimeStamp()
 {
     return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] ";
 }
+
+
 
 
 
