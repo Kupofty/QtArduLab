@@ -164,16 +164,16 @@ void AppController::on_pushButton_clear_custom_text_clicked()
 
 
 //LED
-void AppController::on_pushButton_led_low_clicked()
+void AppController::on_pushButton_digital_low_clicked()
 {
-    int pin = ui->spinBox_led_pin->value();
-    sendMessage("LED", pin, "LOW");
+    int pin = ui->spinBox_digital_pin->value();
+    sendMessage("DIGITAL", pin, "LOW");
 }
 
-void AppController::on_pushButton_led_high_clicked()
+void AppController::on_pushButton_digital_high_clicked()
 {
-    int pin = ui->spinBox_led_pin->value();
-    sendMessage("LED", pin, "HIGH");
+    int pin = ui->spinBox_digital_pin->value();
+    sendMessage("DIGITAL", pin, "HIGH");
 }
 
 

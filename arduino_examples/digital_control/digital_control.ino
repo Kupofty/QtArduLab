@@ -36,7 +36,7 @@ void loop()
     int pin = pinStr.toInt(); 
     
     // LED CONTROL
-    if (command == "LED")
+    if (command == "DIGITAL")
     {
       if (value == "HIGH")
       {

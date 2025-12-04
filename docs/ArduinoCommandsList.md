@@ -9,18 +9,18 @@ All communication uses ASCII strings terminated with a newline (`\n`).
 ### 1.1 Format
 Commands sent from Qt to the Arduino follow this structure: `<COMMAND> <ID> <VALUE>`
 
-| Field      | Description                        |
-|------------|------------------------------------|
-| COMMAND    | Category (e.g., `LED`)             |
-| ID         | Pin number (e.g., `13`,`8`).     |
-| VALUE      | Action or state (`HIGH`, `LOW`, …) |
+| Field      | Description     |
+|------------|-----------------|
+| COMMAND    | Category        |
+| ID         | Pin number      |
+| VALUE      | Action or state |
 
 ### 1.2 Available Commands
 
-| COMMAND | Description                     | Format                 | ID                  | Value           | Example         |
-|---------|---------------------------------|------------------------|---------------------|-----------------|-----------------|
-| `LED`   | Control a digital output (LED)  | `LED <PIN> <STATE>`    | Any digital pin     | `HIGH`, `LOW`   | `LED 13 HIGH`   |
-| `SERVO` | Control a servo motor angle     | `SERVO <PIN> <ANGLE>`  | PWM-capable pin     |  `0-180`        | `SERVO 9 120`   |
+| COMMAND  | Description                     | Format                  | ID                  | Value           | Example          |
+|----------|---------------------------------|-------------------------|---------------------|-----------------|------------------|
+| `DIGITAL`| Control a digital output        | `DIGITAL <PIN> <STATE>` | Any digital pin     | `HIGH`, `LOW`   | `DIGITAL 13 HIGH`|
+| `SERVO`  | Control a servo motor angle     | `SERVO <PIN> <ANGLE>`   | PWM-capable pin     |  `0-180`        | `SERVO 9 120`    |
 
 > **Note:** The physical wiring and the device must match the pin numbers and type specified in the command.
 > **Note:** New commands will be added in the future
@@ -58,11 +58,11 @@ Custom prefixes (e.g., `[SENSOR], [LOGS], [WARNING]`,...) can be added to give m
 
 The Arduino sketch needs to validate incoming commands according to the following rules:
 
-1. The incoming message must be stripped  in **three tokens**.  
-2. The command keywords must be supported (e.g., `LED`).  .  
-3. The pin string must contain **digits only** (e.g., `13`).  .  
-4. The value must match a known action (e.g., `HIGH`, `LOW`).  
-5. After the action is executed, the Arduino should send a confirmation response using the `[CMD]` prefix.
+1. The incoming message must be stripped  in three tokens.  
+2. The command keywords must be supported.  
+3. The pin string must contain digits only  .  
+4. The value must match a known action.  
+5. After the action is executed, the Arduino should send a confirmation response using the correct prefix.
 
 > **Note:** It is the responsibility of the user to correctly implement this validation logic in the Arduino sketch.  
 Ready-to-use examples demonstrating a proper implementation are available in the **`arduino_examples/`** folder.

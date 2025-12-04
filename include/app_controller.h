@@ -47,8 +47,8 @@ class AppController : public QMainWindow
         void on_pushButton_clear_input_text_clicked();
         void on_pushButton_clear_output_text_clicked();
         void on_pushButton_freeze_input_text_clicked();
-        void on_pushButton_led_low_clicked();
-        void on_pushButton_led_high_clicked();
+        void on_pushButton_digital_low_clicked();
+        void on_pushButton_digital_high_clicked();
         void on_pushButton_send_custom_text_clicked();
         void on_pushButton_clear_custom_text_clicked();
         void on_lineEdit_custom_text_returnPressed();

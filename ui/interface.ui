@@ -527,7 +527,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_led">
+            <widget class="QGroupBox" name="groupBox_digital">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -535,21 +535,21 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string>LED</string>
+              <string>Digital</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignmentFlag::AlignCenter</set>
              </property>
              <layout class="QGridLayout" name="gridLayout">
               <item row="3" column="0">
-               <widget class="QPushButton" name="pushButton_led_low">
+               <widget class="QPushButton" name="pushButton_digital_low">
                 <property name="text">
                  <string>LOW</string>
                 </property>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QPushButton" name="pushButton_led_high">
+               <widget class="QPushButton" name="pushButton_digital_high">
                 <property name="text">
                  <string>HIGH</string>
                 </property>
@@ -571,7 +571,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_led_pin">
+                 <widget class="QSpinBox" name="spinBox_digital_pin">
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
@@ -589,7 +589,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_2">
+            <widget class="QGroupBox" name="groupBox_servomotor">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>

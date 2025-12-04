@@ -18,7 +18,7 @@ Commands sent to the Arduino from the GUI follow a custom format.
 The Arduino must use and decode this specific format to execute the correct actions.  
 
 For a full list of commands and details, refer to the `ArduinoCommandsList.md` manual in the `docs` folder.
-Examples are provided in the `arduino_examples` folder
+Examples are provided in the `arduino_examples` folder.
 
 ---
 ## Copyright and licensing
