@@ -109,11 +109,40 @@ void AppController::on_pushButton_refresh_available_ports_list_clicked()
 /////////////////
 /// Send data ///
 /////////////////
+
+//Send
+void AppController::sendMessage(QString command, int pin, QString value)
+{
+    QString space = " ";
+    QString pinStr = QString::number(pin);
+
+    QString message = command + space + pinStr + space + value;
+    sendSerial(message);
+}
+
+void AppController::sendSerial(const QString &message)
+{
+    if (!serial_device->isSerialOpen())
+        return;
+
+    // Send message to serial device
+    serial_device->sendData(message);
+
+    // Append timestamped message to output
+    ui->plainTextEdit_commands->appendPlainText("--------------------------------");
+    ui->plainTextEdit_commands->appendPlainText(actualTimeStamp());
+    ui->plainTextEdit_commands->appendPlainText("Command : " + message);
+}
+
+
+//Clear textEdit
 void AppController::on_pushButton_clear_output_text_clicked()
 {
     ui->plainTextEdit_commands->clear();
 }
 
+
+//Custom Text
 void AppController::on_pushButton_send_custom_text_clicked()
 {
     QString message = ui->lineEdit_custom_text->text();
@@ -133,6 +162,8 @@ void AppController::on_pushButton_clear_custom_text_clicked()
     ui->lineEdit_custom_text->clear();
 }
 
+
+//LED
 void AppController::on_pushButton_led_low_clicked()
 {
     int pin = ui->spinBox_led_pin->value();
@@ -145,28 +176,66 @@ void AppController::on_pushButton_led_high_clicked()
     sendMessage("LED", pin, "HIGH");
 }
 
-void AppController::sendSerial(const QString &message)
+
+//Servomotor
+void AppController::on_spinBox_servomotor_angle_editingFinished()
 {
-    if (!serial_device->isSerialOpen())
-        return;
+    int pin = ui->spinBox_servomotor_pin->value();
+    int angle = ui->spinBox_servomotor_angle->value();
+    QString angleStr = QString::number(angle);
+    sendMessage("SERVO", pin, angleStr);
 
-    // Send message to serial device
-    serial_device->sendData(message);
-
-    // Append timestamped message to output
-    ui->plainTextEdit_commands->appendPlainText("--------------------------------");
-    ui->plainTextEdit_commands->appendPlainText(actualTimeStamp());
-    ui->plainTextEdit_commands->appendPlainText("Command : " + message);
+    ui->horizontalSlider_servomotor_angle->setValue(angle);
 }
 
-void AppController::sendMessage(QString command, int pin, QString value)
+void AppController::on_horizontalSlider_servomotor_angle_sliderReleased()
 {
-    QString space = " ";
-    QString pinStr = QString::number(pin);
-
-    QString message = command + space + pinStr + space + value;
-    sendSerial(message);
+    int pin = ui->spinBox_servomotor_pin->value();
+    int angle = ui->horizontalSlider_servomotor_angle->value();
+    QString angleStr = QString::number(angle);
+    sendMessage("SERVO", pin, angleStr);
 }
+
+void AppController::on_horizontalSlider_servomotor_angle_sliderMoved(int position)
+{
+    ui->spinBox_servomotor_angle->setValue(position);
+}
+
+void AppController::on_pushButton_servomotor_0_clicked()
+{
+    int pin = ui->spinBox_servomotor_pin->value();
+    int angle = 0;
+    QString angleStr = QString::number(angle);
+    sendMessage("SERVO", pin, angleStr);
+
+    ui->horizontalSlider_servomotor_angle->setValue(angle);
+    ui->spinBox_servomotor_angle->setValue(angle);
+}
+
+
+void AppController::on_pushButton_servomotor_90_clicked()
+{
+    int pin = ui->spinBox_servomotor_pin->value();
+    int angle = 90;
+    QString angleStr = QString::number(angle);
+    sendMessage("SERVO", pin, angleStr);
+
+    ui->horizontalSlider_servomotor_angle->setValue(angle);
+    ui->spinBox_servomotor_angle->setValue(angle);
+}
+
+
+void AppController::on_pushButton_servomotor_180_clicked()
+{
+    int pin = ui->spinBox_servomotor_pin->value();
+    int angle = 180;
+    QString angleStr = QString::number(angle);
+    sendMessage("SERVO", pin, angleStr);
+
+    ui->horizontalSlider_servomotor_angle->setValue(angle);
+    ui->spinBox_servomotor_angle->setValue(angle);
+}
+
 
 
 
@@ -224,6 +293,9 @@ QString AppController::actualTimeStamp()
 {
     return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] ";
 }
+
+
+
 
 
 

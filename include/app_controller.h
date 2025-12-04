@@ -52,5 +52,11 @@ class AppController : public QMainWindow
         void on_pushButton_send_custom_text_clicked();
         void on_pushButton_clear_custom_text_clicked();
         void on_lineEdit_custom_text_returnPressed();
+        void on_spinBox_servomotor_angle_editingFinished();
+        void on_horizontalSlider_servomotor_angle_sliderReleased();
+        void on_horizontalSlider_servomotor_angle_sliderMoved(int position);
+        void on_pushButton_servomotor_0_clicked();
+        void on_pushButton_servomotor_90_clicked();
+        void on_pushButton_servomotor_180_clicked();
 };
 

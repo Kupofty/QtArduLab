@@ -4,9 +4,10 @@ This document defines the serial protocol between **QtArduLab** and an **Arduino
 All communication uses ASCII strings terminated with a newline (`\n`).
 
 ---
-## 1. Command Format (Qt → Arduino)
+## 1. Commands (Qt → Arduino)
 
-Commands sent from Qt to the Arduino follow this structure: \<COMMAND> \<ID> \<VALUE>
+### 1.1 Format
+Commands sent from Qt to the Arduino follow this structure: `<COMMAND> <ID> <VALUE>`
 
 | Field      | Description                        |
 |------------|------------------------------------|
@@ -14,17 +15,19 @@ Commands sent from Qt to the Arduino follow this structure: \<COMMAND> \<ID> \<V
 | ID         | Pin number (e.g., `13`,`8`).     |
 | VALUE      | Action or state (`HIGH`, `LOW`, …) |
 
+### 1.2 Available Commands
 
-**Examples:**
-`LED 13 HIGH`
-`LED 8 LOW`
+| COMMAND | Description                     | Format                 | ID                  | Value           | Example         |
+|---------|---------------------------------|------------------------|---------------------|-----------------|-----------------|
+| `LED`   | Control a digital output (LED)  | `LED <PIN> <STATE>`    | Any digital pin     | `HIGH`, `LOW`   | `LED 13 HIGH`   |
+| `SERVO` | Control a servo motor angle     | `SERVO <PIN> <ANGLE>`  | PWM-capable pin     |  `0-180`        | `SERVO 9 120`   |
 
 > **Note:** The physical wiring and the device must match the pin numbers and type specified in the command.
 > **Note:** New commands will be added in the future
 
 
 ------
-## 2. Arduino Response Format (Arduino → Qt)
+## 2. Arduino Responses (Arduino → Qt)
 #### 2.1 Responses To Commands
 
 Arduino must use the prefix `[CMD]` for messages that are responses to commands sent by QtArduLab.
@@ -61,6 +64,5 @@ The Arduino sketch needs to validate incoming commands according to the followin
 4. The value must match a known action (e.g., `HIGH`, `LOW`).  
 5. After the action is executed, the Arduino should send a confirmation response using the `[CMD]` prefix.
 
-**Important:**  
-It is the responsibility of the user to correctly implement this validation logic in the Arduino sketch.  
+> **Note:** It is the responsibility of the user to correctly implement this validation logic in the Arduino sketch.  
 Ready-to-use examples demonstrating a proper implementation are available in the **`arduino_examples/`** folder.
