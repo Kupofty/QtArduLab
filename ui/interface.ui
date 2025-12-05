@@ -33,7 +33,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_connection">
        <attribute name="title">
@@ -193,13 +193,13 @@
                  <number>9</number>
                 </property>
                 <property name="topMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <property name="rightMargin">
                  <number>9</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <item>
                  <widget class="QLabel" name="label_26">
@@ -212,7 +212,7 @@
                    <string>Baudrate :</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -280,49 +280,314 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <property name="leftMargin">
-                 <number>9</number>
-                </property>
-                <property name="topMargin">
-                 <number>9</number>
-                </property>
-                <property name="rightMargin">
-                 <number>9</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>9</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>IO Method :</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBox_io_method">
-                  <item>
-                   <property name="text">
-                    <string>Read &amp; Write</string>
+               <widget class="QFrame" name="horizontalFrame_serial_show_advanced_config">
+                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                 <property name="leftMargin">
+                  <number>9</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>9</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Read Only</string>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Policy::Minimum</enum>
                    </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Write Only</string>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
                    </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_serial_advanced_config">
+                   <property name="text">
+                    <string>Show Advanced Configuration</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Policy::Minimum</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="verticalFrame_serial_advanced_config">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <property name="leftMargin">
+                  <number>9</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>9</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>9</number>
+                 </property>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_io_method">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_5">
+                     <property name="text">
+                      <string>IO Method :</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="comboBox_io_method">
+                     <item>
+                      <property name="text">
+                       <string>Read &amp; Write</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Read Only</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Write Only</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_data_bits">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_11">
+                     <property name="text">
+                      <string>Data Bits :</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="comboBox_data_bits">
+                     <property name="currentIndex">
+                      <number>3</number>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>5 bits</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>6 bits</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>7 bits</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>8 bits</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_12">
+                     <property name="text">
+                      <string>Parity :</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="comboBox_parity">
+                     <item>
+                      <property name="text">
+                       <string>No</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Even</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Odd</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Space</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Mark</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_13">
+                     <property name="text">
+                      <string>Stop Bits :</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="comboBox_stop_bit">
+                     <property name="contextMenuPolicy">
+                      <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+                     </property>
+                     <property name="sizeAdjustPolicy">
+                      <enum>QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon</enum>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>1 bit</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>1.5 bit (Windows)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>2 bits</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_22">
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_14">
+                     <property name="text">
+                      <string>Flow Control :</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="comboBox_flow_control">
+                     <item>
+                      <property name="text">
+                       <string>No</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hardware</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Software</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
              </layout>
             </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Maximum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <widget class="QFrame" name="gridFrame">
@@ -342,19 +607,7 @@
               <property name="spacing">
                <number>9</number>
               </property>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="pushButton_connect_serial_input">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Connect</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
+              <item row="1" column="1">
                <widget class="QPushButton" name="pushButton_disconnect_serial_input">
                 <property name="enabled">
                  <bool>false</bool>
@@ -369,7 +622,7 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0" colspan="2">
+              <item row="2" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_55">
                 <property name="leftMargin">
                  <number>9</number>
@@ -410,6 +663,18 @@
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pushButton_connect_serial_input">
+                <property name="font">
+                 <font>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Connect</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

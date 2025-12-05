@@ -1,6 +1,10 @@
 #include "app_controller.h"
 #include "ui_interface.h"
 
+
+/////////////
+/// Class ///
+/////////////
 AppController::AppController(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AppController),
@@ -16,6 +20,7 @@ AppController::AppController(QWidget *parent) :
     connect(serial_device, &SerialCom::serialError, this, &AppController::handleSerialError);
 
     //Init UI
+    ui->verticalFrame_serial_advanced_config->hide();
     listAvailablePorts(ui->comboBox_serial_input_port_list);
 }
 
@@ -32,40 +37,84 @@ AppController::~AppController()
 /////////////////////////
 
 // Connection
-void AppController::on_pushButton_connect_serial_input_clicked()
+void AppController::updateSerialSettings()
 {
     //Update serial settings
     serial_device->setPortName(ui->comboBox_serial_input_port_list->currentText());
     serial_device->setBaudRate((ui->comboBox_serial_input_port_baudrate->currentText()).toInt());
 
-    int index = ui->comboBox_io_method->currentIndex();
-    if (index == 0)
+    //Update IO Method
+    int index_io_method = ui->comboBox_io_method->currentIndex();
+    if (index_io_method == 0){
         serial_device->setOpenMode(QIODevice::ReadWrite);
-    else if (index == 1)
+        serial_is_read_only = false;
+    }
+    else if (index_io_method == 1){
         serial_device->setOpenMode(QIODevice::ReadOnly);
-    else if (index == 2)
+        serial_is_read_only = true;
+    }
+    else if (index_io_method == 2){
         serial_device->setOpenMode(QIODevice::WriteOnly);
+        serial_is_read_only = false;
+    }
 
-    //Try to connect
+    //Update Data Bits
+    int index_data_bits = ui->comboBox_data_bits->currentIndex();
+    if (index_data_bits == 0)
+        serial_device->setDataBits(QSerialPort::Data5);
+    else if (index_data_bits == 1)
+        serial_device->setDataBits(QSerialPort::Data6);
+    else if (index_data_bits == 2)
+        serial_device->setDataBits(QSerialPort::Data7);
+    else if (index_data_bits == 3)
+        serial_device->setDataBits(QSerialPort::Data8);
+
+    //Update Parity
+    int index_parity = ui->comboBox_parity->currentIndex();
+    if (index_parity == 0)
+        serial_device->setParity(QSerialPort::NoParity);
+    else if (index_parity == 1)
+        serial_device->setParity(QSerialPort::EvenParity);
+    else if (index_parity == 2)
+        serial_device->setParity(QSerialPort::OddParity);
+    else if (index_parity == 3)
+        serial_device->setParity(QSerialPort::SpaceParity);
+    else if (index_parity == 4)
+        serial_device->setParity(QSerialPort::MarkParity);
+
+    //Update Stop Bits
+    int index_stop_bits = ui->comboBox_stop_bit->currentIndex();
+    if (index_stop_bits == 0)
+        serial_device->setStopBits(QSerialPort::OneStop);
+    else if (index_stop_bits == 1)
+        serial_device->setStopBits(QSerialPort::OneAndHalfStop);
+    else if (index_stop_bits == 2)
+        serial_device->setStopBits(QSerialPort::TwoStop);
+
+    //Update Flow Control
+    int index_flow_control = ui->comboBox_flow_control->currentIndex();
+    if (index_flow_control == 0)
+        serial_device->setFlowControl(QSerialPort::NoFlowControl);
+    else if (index_flow_control == 1)
+        serial_device->setFlowControl(QSerialPort::HardwareControl);
+    else if (index_flow_control == 2)
+        serial_device->setFlowControl(QSerialPort::SoftwareControl);
+}
+
+void AppController::serialConnect()
+{
     QString result;
     if(serial_device->openSerialDevice())
     {
         result =  "Connected to " + serial_device->getPortName();
         updateGuiAfterSerialConnection(true);
-        ui->verticalFrame_commands->setEnabled(index != 1);
+        ui->verticalFrame_commands->setEnabled(!serial_is_read_only);
     }
     else
         result =  "Failed to open " + serial_device->getPortName() + " : " + serial_device->getErrorString();
 
     //Display connection status
     ui->plainTextEdit_connection_status->setPlainText(result);
-
-}
-
-void AppController::on_pushButton_disconnect_serial_input_clicked()
-{
-    closeInputSerial();
-    updateGuiAfterSerialConnection(false);
 }
 
 void AppController::closeInputSerial()
@@ -85,6 +134,30 @@ void AppController::updateGuiAfterSerialConnection(bool connectState)
     ui->pushButton_connect_serial_input->setEnabled(!connectState);
     ui->pushButton_disconnect_serial_input->setEnabled(connectState);
     ui->verticalFrame_commands->setEnabled(connectState);
+}
+
+void AppController::on_pushButton_connect_serial_input_clicked()
+{
+    //Send GUI settings to serial device
+    updateSerialSettings();
+
+    //Try to connect
+    serialConnect();
+}
+
+void AppController::on_pushButton_disconnect_serial_input_clicked()
+{
+    closeInputSerial();
+    updateGuiAfterSerialConnection(false);
+}
+
+void AppController::on_checkBox_serial_advanced_config_stateChanged(int checked)
+{
+    if(checked)
+    {
+        ui->verticalFrame_serial_advanced_config->show();
+        ui->horizontalFrame_serial_show_advanced_config->hide();
+    }
 }
 
 

@@ -28,8 +28,11 @@ class AppController : public QMainWindow
     private:
         Ui::AppController *ui;
         SerialCom *serial_device;
+        bool serial_is_read_only = false;
 
     private:
+        void updateSerialSettings();
+        void serialConnect();
         void closeInputSerial();
         void listAvailablePorts(QComboBox *comboBox);
         void updateGuiAfterSerialConnection(bool connectState);
@@ -71,5 +74,6 @@ class AppController : public QMainWindow
         void on_pushButton_analog_128_clicked();
         void on_pushButton_analog_255_clicked();
         void on_horizontalSlider_analog_pwm_sliderMoved(int position);
+        void on_checkBox_serial_advanced_config_stateChanged(int arg1);
 };
 

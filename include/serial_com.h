@@ -54,5 +54,4 @@ class SerialCom : public QObject
         QSerialPort serial;
         QByteArray buffer;
         QIODevice::OpenMode ioMode = QIODevice::ReadWrite;
-
 };
