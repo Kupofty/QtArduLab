@@ -1,6 +1,7 @@
 #include "app_controller.h"
 #include "ui_interface.h"
 
+#include <QStandardItemModel>
 
 /////////////
 /// Class ///
@@ -161,16 +162,41 @@ void AppController::on_checkBox_serial_advanced_config_stateChanged(int checked)
 }
 
 
-//COM ports
+// COM ports
 void AppController::listAvailablePorts(QComboBox *comboBox)
 {
     comboBox->clear();
+
     const auto ports = QSerialPortInfo::availablePorts();
     for (const QSerialPortInfo &port : ports)
     {
+        QString tooltip = QString(
+                              "Port: %1\n"
+                              "Description: %2\n"
+                              "Manufacturer: %3\n"
+                              "Serial Number: %4\n"
+                              "VID: %5\n"
+                              "PID: %6")
+                              .arg(
+                                  port.portName(),
+                                  port.description(),
+                                  port.manufacturer(),
+                                  port.serialNumber(),
+                                  QString("%1").arg(port.vendorIdentifier(), 4, 16, QLatin1Char('0')),
+                                  QString("%1").arg(port.productIdentifier(), 4, 16, QLatin1Char('0'))
+                                  );
+
+
         comboBox->addItem(port.portName());
+
+        QStandardItemModel *model = qobject_cast<QStandardItemModel *>(comboBox->model());
+
+        QStandardItem *item = model->item(comboBox->count() - 1);
+        item->setToolTip(tooltip);
     }
 }
+
+
 
 void AppController::on_pushButton_refresh_available_ports_list_clicked()
 {
