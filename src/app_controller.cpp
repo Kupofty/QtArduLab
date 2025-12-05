@@ -164,36 +164,44 @@ void AppController::on_pushButton_clear_custom_text_clicked()
 
 
 //LED
-void AppController::on_pushButton_digital_low_clicked()
+void AppController::sendDigitalCmd(QString state)
 {
     int pin = ui->spinBox_digital_pin->value();
-    sendMessage("DIGITAL", pin, "LOW");
+    sendMessage("DIGITAL", pin, state);
+}
+
+void AppController::on_pushButton_digital_low_clicked()
+{
+    sendDigitalCmd("LOW");
 }
 
 void AppController::on_pushButton_digital_high_clicked()
 {
-    int pin = ui->spinBox_digital_pin->value();
-    sendMessage("DIGITAL", pin, "HIGH");
+    sendDigitalCmd("HIGH");
 }
 
 
 //Servomotor
-void AppController::on_spinBox_servomotor_angle_editingFinished()
+void AppController::sendServoCmd(int angle)
 {
+    ui->horizontalSlider_servomotor_angle->setValue(angle);
+    ui->spinBox_servomotor_angle->setValue(angle);
+
     int pin = ui->spinBox_servomotor_pin->value();
-    int angle = ui->spinBox_servomotor_angle->value();
     QString angleStr = QString::number(angle);
     sendMessage("SERVO", pin, angleStr);
+}
 
-    ui->horizontalSlider_servomotor_angle->setValue(angle);
+void AppController::on_spinBox_servomotor_angle_editingFinished()
+{
+    int angle = ui->spinBox_servomotor_angle->value();
+    sendServoCmd(angle);
 }
 
 void AppController::on_horizontalSlider_servomotor_angle_sliderReleased()
 {
-    int pin = ui->spinBox_servomotor_pin->value();
     int angle = ui->horizontalSlider_servomotor_angle->value();
-    QString angleStr = QString::number(angle);
-    sendMessage("SERVO", pin, angleStr);
+    sendServoCmd(angle);
 }
 
 void AppController::on_horizontalSlider_servomotor_angle_sliderMoved(int position)
@@ -203,71 +211,61 @@ void AppController::on_horizontalSlider_servomotor_angle_sliderMoved(int positio
 
 void AppController::on_pushButton_servomotor_0_clicked()
 {
-    int pin = ui->spinBox_servomotor_pin->value();
-    int angle = 0;
-    QString angleStr = QString::number(angle);
-    sendMessage("SERVO", pin, angleStr);
-
-    ui->horizontalSlider_servomotor_angle->setValue(angle);
-    ui->spinBox_servomotor_angle->setValue(angle);
+    sendServoCmd(0);
 }
 
 void AppController::on_pushButton_servomotor_90_clicked()
 {
-    int pin = ui->spinBox_servomotor_pin->value();
-    int angle = 90;
-    QString angleStr = QString::number(angle);
-    sendMessage("SERVO", pin, angleStr);
-
-    ui->horizontalSlider_servomotor_angle->setValue(angle);
-    ui->spinBox_servomotor_angle->setValue(angle);
+    sendServoCmd(90);
 }
 
 void AppController::on_pushButton_servomotor_180_clicked()
 {
-    int pin = ui->spinBox_servomotor_pin->value();
-    int angle = 180;
-    QString angleStr = QString::number(angle);
-    sendMessage("SERVO", pin, angleStr);
-
-    ui->horizontalSlider_servomotor_angle->setValue(angle);
-    ui->spinBox_servomotor_angle->setValue(angle);
+    sendServoCmd(180);
 }
 
 
 //Speaker / Passive Buzzer
+void AppController::sendToneCmd(int frequency)
+{
+    QString frequencyStr = QString::number(frequency);
+    int pin = ui->spinBox_speaker_pin->value();
+    sendMessage("TONE", pin, frequencyStr);
+}
+
 void AppController::on_pushButton_speaker_on_clicked()
 {
-    int pin = ui->spinBox_speaker_pin->value();
     int frequency = ui->spinBox_speaker_frequency->value();
-    QString frequencyStr = QString::number(frequency);
-    sendMessage("TONE", pin, frequencyStr);
+    sendToneCmd(frequency);
 }
 
 void AppController::on_pushButton_speaker_off_clicked()
 {
-    int pin = ui->spinBox_speaker_pin->value();
-    sendMessage("TONE", pin, "-1");
+    sendToneCmd(-1);
 }
 
 
 //Analog
-void AppController::on_spinBox_analog_pwm_editingFinished()
+void AppController::sendAnalogCmd(int pwm)
 {
+    ui->horizontalSlider_analog_pwm->setValue(pwm);
+    ui->spinBox_analog_pwm->setValue(pwm);
+
     int pin = ui->spinBox_analog_pin->value();
-    int pwm = ui->spinBox_analog_pwm->value();
     QString pwmStr = QString::number(pwm);
     sendMessage("ANALOG", pin, pwmStr);
+}
 
-    ui->horizontalSlider_analog_pwm->setValue(pwm);
+void AppController::on_spinBox_analog_pwm_editingFinished()
+{
+    int pwm = ui->spinBox_analog_pwm->value();
+    sendAnalogCmd(pwm);
 }
 
 void AppController::on_horizontalSlider_analog_pwm_sliderReleased()
 {
-    int pin = ui->spinBox_analog_pin->value();
     int pwm = ui->horizontalSlider_analog_pwm->value();
-    QString pwmStr = QString::number(pwm);
-    sendMessage("ANALOG", pin, pwmStr);
+    sendAnalogCmd(pwm);
 }
 
 void AppController::on_horizontalSlider_analog_pwm_sliderMoved(int position)
@@ -277,35 +275,17 @@ void AppController::on_horizontalSlider_analog_pwm_sliderMoved(int position)
 
 void AppController::on_pushButton_analog_0_clicked()
 {
-    int pin = ui->spinBox_analog_pin->value();
-    int pwm = 0;
-    QString pwmStr = QString::number(pwm);
-    sendMessage("ANALOG", pin, pwmStr);
-
-    ui->horizontalSlider_analog_pwm->setValue(pwm);
-    ui->spinBox_analog_pwm->setValue(pwm);
+    sendAnalogCmd(0);
 }
 
 void AppController::on_pushButton_analog_128_clicked()
 {
-    int pin = ui->spinBox_analog_pin->value();
-    int pwm =128;
-    QString pwmStr = QString::number(pwm);
-    sendMessage("ANALOG", pin, pwmStr);
-
-    ui->horizontalSlider_analog_pwm->setValue(pwm);
-    ui->spinBox_analog_pwm->setValue(pwm);
+    sendAnalogCmd(128);
 }
 
 void AppController::on_pushButton_analog_255_clicked()
 {
-    int pin = ui->spinBox_analog_pin->value();
-    int pwm = 255;
-    QString pwmStr = QString::number(pwm);
-    sendMessage("ANALOG", pin, pwmStr);
-
-    ui->horizontalSlider_analog_pwm->setValue(pwm);
-    ui->spinBox_analog_pwm->setValue(pwm);
+    sendAnalogCmd(255);
 }
 
 
@@ -327,6 +307,7 @@ void AppController::handleSerialInput(const QByteArray &line)
         QString payload = text.mid(endBracket + 1).trimmed();
         ui->plainTextEdit_commands->appendPlainText("Response : " + payload);
     }
+
     //Display sensors & logs
     else
     {

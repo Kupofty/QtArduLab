@@ -34,8 +34,13 @@ class AppController : public QMainWindow
         void listAvailablePorts(QComboBox *comboBox);
         void updateGuiAfterSerialConnection(bool connectState);
         QString actualTimeStamp();
+
         void sendSerial(const QString &message);
         void sendMessage(QString type, int pin, QString messageCommand);
+        void sendDigitalCmd(QString state);
+        void sendAnalogCmd(int pwm);
+        void sendServoCmd(int angle);
+        void sendToneCmd(int frequency);
 
     private slots:
         void handleSerialInput(const QByteArray &line);
