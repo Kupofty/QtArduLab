@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QRegularExpression>
 #include <QMessageBox>
+#include <QStandardItemModel>
 
 #include "serial_com.h"
 
@@ -35,6 +36,7 @@ class AppController : public QMainWindow
         void serialConnect();
         void closeInputSerial();
         void listAvailablePorts(QComboBox *comboBox);
+        QString findArduinoPort();
         void updateGuiAfterSerialConnection(bool connectState);
         QString actualTimeStamp();
 
@@ -75,5 +77,6 @@ class AppController : public QMainWindow
         void on_pushButton_analog_255_clicked();
         void on_horizontalSlider_analog_pwm_sliderMoved(int position);
         void on_checkBox_serial_advanced_config_stateChanged(int arg1);
+        void on_pushButton_serial_autodetect_clicked();
 };
 

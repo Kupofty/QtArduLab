@@ -1,7 +1,6 @@
 #include "app_controller.h"
 #include "ui_interface.h"
 
-#include <QStandardItemModel>
 
 /////////////
 /// Class ///
@@ -163,6 +162,88 @@ void AppController::on_checkBox_serial_advanced_config_stateChanged(int checked)
 
 
 // COM ports
+QString AppController::findArduinoPort()
+{
+    // VID/PID list
+    QList<QPair<int,int>> knownIds = {
+        // Official Arduino
+        {0x2341, 0x0043}, {0x2341, 0x0010}, {0x2341, 0x8036}, {0x2341, 0x0243},
+        {0x2A03, 0x0043},
+
+        // CH340 / CH341 clones
+        {0x1A86, 0x7523},
+
+        // FTDI clones
+        {0x0403, 0x6001},
+
+        // CP2102 clones
+        {0x10C4, 0xEA60},
+
+        // Prolific clones
+        {0x067B, 0x2303}
+    };
+
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+    for (const QSerialPortInfo &port : ports)
+    {
+        // Check VID/PID
+        for (auto &id : knownIds)
+        {
+            if (port.vendorIdentifier() == id.first &&
+                port.productIdentifier() == id.second)
+            {
+                return port.portName();
+            }
+        }
+
+        // Fallback: check description
+        QString d = port.description().toLower();
+        if (d.contains("arduino") || d.contains("uno") ||
+            d.contains("mega")    || d.contains("nano") ||
+            d.contains("ch340")   || d.contains("ch341") ||
+            d.contains("ftdi")    || d.contains("cp210") ||
+            d.contains("usb serial"))
+        {
+            return port.portName();
+        }
+    }
+
+    return QString();
+}
+
+void AppController::on_pushButton_serial_autodetect_clicked()
+{
+    ui->pushButton_refresh_available_ports_list->click();
+
+    QString arduinoPort = findArduinoPort();
+    if (!arduinoPort.isEmpty())
+    {
+        int index = ui->comboBox_serial_input_port_list->findText(arduinoPort);
+        if (index >= 0)
+        {
+            ui->comboBox_serial_input_port_list->setCurrentIndex(index);
+            ui->pushButton_connect_serial_input->click();
+        }
+        else
+        {
+            QMessageBox::warning(this,
+                                 "Port Not in List",
+                                 QString("Arduino detected on %1, but this port is not in the dropdown list.").arg(arduinoPort));
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this,
+                             "Arduino Not Found",
+                             "No Arduino board was detected on any available COM port.");
+    }
+}
+
+void AppController::on_pushButton_refresh_available_ports_list_clicked()
+{
+    listAvailablePorts(ui->comboBox_serial_input_port_list);
+}
+
 void AppController::listAvailablePorts(QComboBox *comboBox)
 {
     comboBox->clear();
@@ -194,13 +275,6 @@ void AppController::listAvailablePorts(QComboBox *comboBox)
         QStandardItem *item = model->item(comboBox->count() - 1);
         item->setToolTip(tooltip);
     }
-}
-
-
-
-void AppController::on_pushButton_refresh_available_ports_list_clicked()
-{
-    listAvailablePorts(ui->comboBox_serial_input_port_list);
 }
 
 
@@ -444,6 +518,7 @@ QString AppController::actualTimeStamp()
 {
     return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] ";
 }
+
 
 
 

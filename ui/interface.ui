@@ -185,6 +185,16 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_serial_autodetect">
+                  <property name="text">
+                   <string>Auto Detect</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="QIcon::ThemeIcon::SystemSearch"/>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </item>
               <item>
@@ -574,22 +584,6 @@
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Policy::Maximum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QFrame" name="gridFrame">
              <layout class="QGridLayout" name="gridLayout_3">
               <property name="leftMargin">
@@ -607,28 +601,13 @@
               <property name="spacing">
                <number>9</number>
               </property>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="pushButton_disconnect_serial_input">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Disconnect</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_55">
                 <property name="leftMargin">
                  <number>9</number>
                 </property>
                 <property name="topMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <property name="rightMargin">
                  <number>9</number>
@@ -664,17 +643,48 @@
                 </item>
                </layout>
               </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="pushButton_connect_serial_input">
-                <property name="font">
-                 <font>
-                  <pointsize>9</pointsize>
-                 </font>
+              <item row="0" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_23">
+                <property name="leftMargin">
+                 <number>9</number>
                 </property>
-                <property name="text">
-                 <string>Connect</string>
+                <property name="topMargin">
+                 <number>0</number>
                 </property>
-               </widget>
+                <property name="rightMargin">
+                 <number>9</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="pushButton_connect_serial_input">
+                  <property name="font">
+                   <font>
+                    <pointsize>9</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Connect</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_disconnect_serial_input">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>9</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Disconnect</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
