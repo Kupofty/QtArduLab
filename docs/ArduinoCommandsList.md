@@ -19,6 +19,7 @@ Commands sent from Qt to the Arduino follow this structure:
 | COMMAND  | Description                        | Format                   | ID                | Value                    | Example           |
 |----------|------------------------------------|--------------------------|-------------------|--------------------------|-------------------|
 | `DIGITAL`| Control a digital output           | `DIGITAL <PIN> <STATE>`  | Any digital pin   | `HIGH`, `LOW`            | `DIGITAL 13 HIGH` |
+| `ANALOG` | Control an analog output           | `ANALOG <PIN> <PWM>`     | PWM-capable pin   | `0-255`                  | `ANALOG 11 255`   |
 | `SERVO`  | Control a servo motor angle        | `SERVO <PIN> <ANGLE>`    | PWM-capable pin   | `0-180`                  | `SERVO 9 120`     |
 | `TONE`   | Control a speaker / passive buzzer | `TONE <PIN> <FREQUENCY>` | Any digital pin   | `0-∞ = TONE`,`-1 = STOP` | `TONE 9 1000`     |
 

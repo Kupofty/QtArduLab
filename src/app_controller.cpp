@@ -235,7 +235,7 @@ void AppController::on_pushButton_servomotor_180_clicked()
 }
 
 
-//Passive buzzer
+//Speaker / Passive Buzzer
 void AppController::on_pushButton_speaker_on_clicked()
 {
     int pin = ui->spinBox_speaker_pin->value();
@@ -244,11 +244,68 @@ void AppController::on_pushButton_speaker_on_clicked()
     sendMessage("TONE", pin, frequencyStr);
 }
 
-
 void AppController::on_pushButton_speaker_off_clicked()
 {
     int pin = ui->spinBox_speaker_pin->value();
     sendMessage("TONE", pin, "-1");
+}
+
+
+//Analog
+void AppController::on_spinBox_analog_pwm_editingFinished()
+{
+    int pin = ui->spinBox_analog_pin->value();
+    int pwm = ui->spinBox_analog_pwm->value();
+    QString pwmStr = QString::number(pwm);
+    sendMessage("ANALOG", pin, pwmStr);
+
+    ui->horizontalSlider_analog_pwm->setValue(pwm);
+}
+
+void AppController::on_horizontalSlider_analog_pwm_sliderReleased()
+{
+    int pin = ui->spinBox_analog_pin->value();
+    int pwm = ui->horizontalSlider_analog_pwm->value();
+    QString pwmStr = QString::number(pwm);
+    sendMessage("ANALOG", pin, pwmStr);
+}
+
+void AppController::on_horizontalSlider_analog_pwm_sliderMoved(int position)
+{
+    ui->spinBox_analog_pwm->setValue(position);
+}
+
+void AppController::on_pushButton_analog_0_clicked()
+{
+    int pin = ui->spinBox_analog_pin->value();
+    int pwm = 0;
+    QString pwmStr = QString::number(pwm);
+    sendMessage("ANALOG", pin, pwmStr);
+
+    ui->horizontalSlider_analog_pwm->setValue(pwm);
+    ui->spinBox_analog_pwm->setValue(pwm);
+}
+
+void AppController::on_pushButton_analog_128_clicked()
+{
+    int pin = ui->spinBox_analog_pin->value();
+    int pwm =128;
+    QString pwmStr = QString::number(pwm);
+    sendMessage("ANALOG", pin, pwmStr);
+
+    ui->horizontalSlider_analog_pwm->setValue(pwm);
+    ui->spinBox_analog_pwm->setValue(pwm);
+}
+
+void AppController::on_pushButton_analog_255_clicked()
+{
+    int pin = ui->spinBox_analog_pin->value();
+    int pwm = 255;
+    QString pwmStr = QString::number(pwm);
+    sendMessage("ANALOG", pin, pwmStr);
+
+    ui->horizontalSlider_analog_pwm->setValue(pwm);
+    ui->spinBox_analog_pwm->setValue(pwm);
 }
 
 
@@ -307,8 +364,6 @@ QString AppController::actualTimeStamp()
 {
     return "[" + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss") + "] ";
 }
-
-
 
 
 

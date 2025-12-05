@@ -60,5 +60,11 @@ class AppController : public QMainWindow
         void on_pushButton_servomotor_180_clicked();
         void on_pushButton_speaker_on_clicked();
         void on_pushButton_speaker_off_clicked();
+        void on_horizontalSlider_analog_pwm_sliderReleased();
+        void on_spinBox_analog_pwm_editingFinished();
+        void on_pushButton_analog_0_clicked();
+        void on_pushButton_analog_128_clicked();
+        void on_pushButton_analog_255_clicked();
+        void on_horizontalSlider_analog_pwm_sliderMoved(int position);
 };
 
